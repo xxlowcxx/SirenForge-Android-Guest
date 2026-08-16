@@ -6,10 +6,18 @@ Obtain Firehose programmer → rewrite GPT → install custom partitions / dual-
 **Problem on current flagships:**  
 Programmers are missing or authenticated, bootloader unlock is restricted, and the storage controller is protected.
 
-**Proposed approach:**  
-Obtain any elevated foothold → capture system image → run original Android as a guest VM under a host OS we control, using the hardware hypervisor already present on the SoC (Gunyah / pKVM / AVF).
+**We still want the classic capability.**  
+Full GPT rewriting (shrink, create, rearrange) remains a hard goal on any device where low-level write access can be obtained. Our partitioner is designed to give the same class of choices as GParted.
 
-**Expected advantage:**  
-We no longer need permanent unrestricted write access to the real GPT. Once the guest is running under our host, we can treat the original Android environment as a controllable, snapshot-able box.
+**Proposed complementary approach – Bubbles:**  
+Obtain any elevated foothold → capture the entire original system → shrink it to minimum or custom size → place it inside a virtual bubble under a host environment we control.
 
-This repository exists to test and document whether that path is achievable on modern Samsung Galaxy hardware.
+The original OS stays intact and untouched inside the bubble.  
+All remaining space becomes the user’s playground.  
+From the outer environment the user can load untraditional operating systems and tools without destroying the original.
+
+**Android-as-Guest** is the specific application of this model to modern locked Android devices using Gunyah / AVF / pKVM.
+
+**Boot Stomp** is the component that controls how the outer environment boots and how it interacts with the contained original system.
+
+This repository exists to state these goals clearly and to test whether both the direct GPT path and the Bubbles containment path can be made real.
